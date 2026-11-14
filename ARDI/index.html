@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#06130e">
+<title>ARDI — Growing a New Perspective</title>
+<link rel="stylesheet" href="style.css">
+<script src="https://unpkg.com/three@0.160.0/build/three.min.js"></script>
+</head>
+<body>
+<div class="cursor-glow" id="cursorGlow"></div>
+<div class="app-shell">
+  <aside class="sidebar" id="sidebar">
+    <a class="brand" href="#" data-page="dashboard"><span class="brand-mark">A</span><span>ARDI<small>GROWING A NEW PERSPECTIVE</small></span></a>
+    <div class="side-label">WORKSPACE</div>
+    <nav class="side-nav">
+      <button class="nav-link active" data-page="dashboard"><i>⌂</i>Overview</button>
+      <button class="nav-link" data-page="farm"><i>♧</i>My Farm</button>
+      <button class="nav-link" data-page="earth"><i>◉</i>Earth Explorer</button>
+      <button class="nav-link" data-page="data"><i>▤</i>Farm Data</button>
+      <button class="nav-link" data-page="rotation"><i>⟳</i>Crop Rotation</button>
+      <button class="nav-link" data-page="insights"><i>✧</i>Insights</button>
+    </nav>
+    <div class="sidebar-bottom">
+      <div class="connection"><span class="pulse"></span><div><b>Workspace ready</b><small>Data connection pending</small></div></div>
+      <button class="nav-link" data-page="settings"><i>⚙</i>Settings</button>
+      <button class="profile-mini" id="accountBtn" type="button" aria-label="Open account login">
+        <span class="avatar">AR</span><span class="profile-copy"><b>Account</b><small>Sign in to your workspace</small></span><span class="profile-arrow">↗</span>
+      </button>
+    </div>
+  </aside>
+
+  <main class="main">
+    <header class="topbar">
+      <button class="mobile-menu" id="menuBtn">☰</button>
+      <div class="breadcrumb"><span>Workspace</span><b>/</b><strong id="crumb">Overview</strong></div>
+      <div class="top-actions"><span class="top-status"><i></i> Prototype mode</span><button class="icon-btn" title="Notifications">♧</button><div class="avatar small">AR</div></div>
+    </header>
+
+    <section class="page active" id="page-dashboard">
+      <div class="welcome-row"><div><div class="kicker">FIELD INTELLIGENCE PLATFORM</div><h1>Grow with <em>insight.</em></h1><p class="sub">A clearer perspective for every field, every season.</p></div><button class="primary-btn" data-go="farm">＋ Set up your farm</button></div>
+      <div class="hero-3d card">
+        <div class="hero-copy"><span class="eyebrow">WELCOME TO ARDI</span><h2>Understand your land.<br><em>Shape your future.</em></h2><p>Your agricultural workspace is ready. Add your farm details to begin exploring your growing journey.</p><button class="glass-btn" data-go="farm">Explore workspace <span>↗</span></button></div>
+        <div class="earth-wrap"><canvas id="earthCanvas"></canvas><div class="orbit orbit-one"></div><div class="orbit orbit-two"></div><div class="earth-caption"><span class="pulse"></span> EARTH SYSTEMS · 3D VIEW</div></div>
+        <div class="hero-stars"></div>
+      </div>
+      <div class="section-title"><div><span class="kicker">YOUR WORKSPACE</span><h2>Explore ARDI</h2></div><span class="muted">Choose where to begin</span></div>
+      <div class="feature-grid">
+        <button class="feature-card" data-go="farm"><span class="feature-icon">♧</span><span class="feature-arrow">↗</span><h3>My Farm</h3><p>Set up your farm profile and field details.</p><small>FARM PROFILE</small></button>
+        <button class="feature-card" data-go="earth"><span class="feature-icon">◉</span><span class="feature-arrow">↗</span><h3>Earth Explorer</h3><p>Explore an immersive view of our planet.</p><small>3D EXPLORATION</small></button>
+        <button class="feature-card" data-go="data"><span class="feature-icon">▤</span><span class="feature-arrow">↗</span><h3>Farm Data</h3><p>A dedicated space for your farm information.</p><small>DATA WORKSPACE</small></button>
+        <button class="feature-card" data-go="rotation"><span class="feature-icon">⟳</span><span class="feature-arrow">↗</span><h3>Crop Rotation</h3><p>Organize a four-season crop plan.</p><small>SEASON PLANNER</small></button>
+      </div>
+      <div class="bottom-note"><span>✧</span><p><b>A living workspace.</b> Your data and recommendations can be connected when your team is ready.</p></div>
+    </section>
+
+    <section class="page" id="page-farm">
+      <div class="page-heading"><div class="kicker">YOUR LAND · YOUR PROFILE</div><h1>My <em>Farm.</em></h1><p class="sub">Create a home for your farm information. You can connect your data later.</p></div>
+      <div class="two-col">
+        <div class="card form-card"><div class="card-heading"><div><span class="kicker">FARM PROFILE</span><h2>Farm details</h2></div><span class="round-icon">♧</span></div>
+          <form id="farmForm" class="farm-form">
+            <label>Farm name<input id="farmName" placeholder="Enter your farm name"></label>
+            <label>Country / Region<input id="farmRegion" placeholder="Enter country or region"></label>
+            <div class="form-row"><label>Latitude<input id="farmLat" type="number" step="any" placeholder="Latitude"></label><label>Longitude<input id="farmLon" type="number" step="any" placeholder="Longitude"></label></div>
+            <div class="form-row"><label>Farm area<input id="farmArea" type="number" step="any" placeholder="Area"></label><label>Area unit<select id="farmUnit"><option>Hectares</option><option>Acres</option></select></label></div>
+            <label>Current crop<input id="farmCrop" placeholder="Enter crop (optional)"></label>
+            <button class="primary-btn full" type="submit">Save farm profile <span>→</span></button>
+            <p class="tiny-note">Prototype only: profile is saved in this browser. No external data is sent.</p>
+          </form>
+        </div>
+        <div class="card farm-visual"><div class="kicker">FIELD CANVAS</div><div class="field-art"><div class="field-sun"></div><div class="field-hill hill-a"></div><div class="field-hill hill-b"></div><div class="field-lines"></div><div class="field-tree">♧</div></div><div class="visual-bottom"><div><b id="farmVisualName">Your farm starts here</b><small id="farmVisualRegion">Add a location to personalize your workspace</small></div><span class="badge">3D LANDSCAPE</span></div></div>
+      </div>
+      <div class="card empty-card"><span class="round-icon">⌖</span><div><h3>Farm location preview</h3><p>Your selected farm location and field layers will appear here after map integration.</p></div><span class="pending">MAP CONNECTION PENDING</span></div>
+    </section>
+
+    <section class="page" id="page-earth">
+      <div class="page-heading"><div class="kicker">PLANETARY PERSPECTIVE</div><h1>Earth <em>Explorer.</em></h1><p class="sub">An immersive 3D space to explore the planet. This scene is illustrative, not live satellite imagery.</p></div>
+      <div class="card explorer-card"><div class="explorer-info"><span class="eyebrow">INTERACTIVE PLANET</span><h2>One planet.<br><em>Infinite possibilities.</em></h2><p>Drag to rotate. Scroll to zoom. Explore the Earth in three dimensions.</p><div class="legend"><span><i class="dot green"></i> Land forms</span><span><i class="dot blue"></i> Ocean surface</span></div><div class="data-pending">✧ Satellite layers can be connected later</div></div><div class="big-earth" id="bigEarth"><canvas id="explorerCanvas"></canvas><div class="earth-hud">ARDI · EARTH 01</div></div></div>
+    </section>
+
+    <section class="page" id="page-data">
+      <div class="page-heading"><div class="kicker">YOUR INFORMATION HUB</div><h1>Farm <em>Data.</em></h1><p class="sub">A clean space for the information that will power your farm insights.</p></div>
+      <div class="data-banner card"><div><span class="eyebrow">DATA WORKSPACE</span><h2>Your data.<br><em>Your decisions.</em></h2><p>Connect approved data sources when your team is ready. Nothing is fabricated or pre-filled.</p></div><div class="data-orb"><div class="orb-ring"></div><div class="orb-core">✧</div></div></div>
+      <div class="data-grid">
+        <div class="data-tile"><span>01</span><i>☼</i><h3>Climate</h3><p>Temperature and atmospheric conditions.</p><small>AWAITING CONNECTION</small></div>
+        <div class="data-tile"><span>02</span><i>⌁</i><h3>Precipitation</h3><p>Rainfall and water availability context.</p><small>AWAITING CONNECTION</small></div>
+        <div class="data-tile"><span>03</span><i>♧</i><h3>Soil</h3><p>Soil-related observations and farm records.</p><small>AWAITING CONNECTION</small></div>
+        <div class="data-tile"><span>04</span><i>◌</i><h3>Vegetation</h3><p>Vegetation and field condition indicators.</p><small>AWAITING CONNECTION</small></div>
+      </div>
+      <div class="card source-placeholder"><div class="round-icon">⌘</div><div><h3>Data source connections</h3><p>API endpoints and datasets can be added here later without changing the visual structure.</p></div><span class="pending">NOT CONNECTED</span></div>
+    </section>
+
+    <section class="page" id="page-rotation">
+      <div class="page-heading"><div class="kicker">PLAN FOR THE SEASONS AHEAD</div><h1>Crop <em>Rotation.</em></h1><p class="sub">A four-season planning canvas. Add your own crops when you are ready.</p></div>
+      <div class="rotation-intro card"><div><span class="eyebrow">FOUR SEASON PLANNER</span><h2>Think beyond<br><em>one harvest.</em></h2><p>Build a rotation timeline for your farm. This planner is an empty workspace, not an agronomic recommendation.</p></div><div class="season-wheel"><div class="wheel-center">4<span>SEASONS</span></div><b class="w1">01</b><b class="w2">02</b><b class="w3">03</b><b class="w4">04</b></div></div>
+      <div class="season-grid">
+        <div class="season-card"><span>SEASON 01</span><div class="season-plant">♧</div><h3>First season</h3><input placeholder="Add crop name"><small>NO CROP SELECTED</small></div>
+        <div class="season-card"><span>SEASON 02</span><div class="season-plant">♧</div><h3>Second season</h3><input placeholder="Add crop name"><small>NO CROP SELECTED</small></div>
+        <div class="season-card"><span>SEASON 03</span><div class="season-plant">♧</div><h3>Third season</h3><input placeholder="Add crop name"><small>NO CROP SELECTED</small></div>
+        <div class="season-card"><span>SEASON 04</span><div class="season-plant">♧</div><h3>Fourth season</h3><input placeholder="Add crop name"><small>NO CROP SELECTED</small></div>
+      </div>
+    </section>
+
+    <section class="page" id="page-insights">
+      <div class="page-heading"><div class="kicker">FROM INFORMATION TO UNDERSTANDING</div><h1>Farm <em>Insights.</em></h1><p class="sub">A future home for your team's verified analysis and model outputs.</p></div>
+      <div class="insight-hero card"><div class="insight-symbol">✧</div><span class="eyebrow">INTELLIGENCE LAYER</span><h2>Clarity grows<br><em>with context.</em></h2><p>When your team's model is ready, its outputs can be presented here with explanations, sources, and confidence details.</p><span class="pending">AI MODEL CONNECTION PENDING</span></div>
+      <div class="data-grid"><div class="data-tile"><span>01</span><i>⌁</i><h3>Field analysis</h3><p>Farm-specific analysis and observations.</p><small>AWAITING MODEL</small></div><div class="data-tile"><span>02</span><i>⟳</i><h3>Rotation insights</h3><p>Compare rotation scenarios.</p><small>AWAITING MODEL</small></div><div class="data-tile"><span>03</span><i>◈</i><h3>Risk context</h3><p>Understand environmental considerations.</p><small>AWAITING MODEL</small></div><div class="data-tile"><span>04</span><i>↗</i><h3>Reports</h3><p>Review and export future results.</p><small>AWAITING MODEL</small></div></div>
+    </section>
+
+    <section class="page" id="page-settings">
+      <div class="page-heading"><div class="kicker">PERSONALIZE YOUR SPACE</div><h1>ARDI <em>Settings.</em></h1><p class="sub">Manage your workspace preferences.</p></div>
+      <div class="card settings-card"><div><h3>Interface language</h3><p>Choose the language for the workspace.</p></div><select><option>English</option><option>العربية</option></select></div>
+      <div class="card settings-card"><div><h3>Motion effects</h3><p>Interactive 3D and ambient animations.</p></div><span class="badge">ENABLED</span></div>
+      <div class="card settings-card"><div><h3>External connections</h3><p>No external data sources are connected in this prototype.</p></div><span class="pending">PENDING</span></div>
+    </section>
+
+    <section class="page" id="page-account">
+      <div class="account-layout">
+        <div class="account-story">
+          <div class="kicker">YOUR LAND · YOUR WORKSPACE</div>
+          <div class="account-mark">A</div>
+          <h1>Welcome <em>back.</em></h1>
+          <p class="sub">Sign in to continue building a clearer picture of your farm, your fields, and the seasons ahead.</p>
+          <div class="account-points">
+            <div><span>✧</span><p><b>Your farm, in one place</b><small>Keep your field information organized.</small></p></div>
+            <div><span>◉</span><p><b>A connected perspective</b><small>Bring your agricultural insights together.</small></p></div>
+            <div><span>⟳</span><p><b>Plan beyond one season</b><small>Keep your crop planning close at hand.</small></p></div>
+          </div>
+          <div class="account-footnote"><span class="pulse"></span> ARDI · GROWING A NEW PERSPECTIVE</div>
+        </div>
+        <div class="account-card card">
+          <div class="account-card-top"><span class="eyebrow">ARDI ACCOUNT</span><span class="account-secure">⌑ SECURE ACCESS</span></div>
+          <h2>Sign in to <em>ARDI.</em></h2>
+          <p class="account-intro">Enter your details to access your workspace.</p>
+          <div id="loginView">
+            <form id="loginForm" class="login-form">
+              <label for="loginEmail">Email address</label>
+              <input id="loginEmail" name="email" type="email" autocomplete="username" placeholder="you@example.com" required>
+              <div class="password-label"><label for="loginPassword">Password</label></div>
+              <div class="password-wrap"><input id="loginPassword" name="password" type="password" autocomplete="current-password" placeholder="Enter your password" required><button type="button" id="togglePassword" aria-label="Show password">SHOW</button></div>
+              <div class="password-label forgot-row"><a href="#" id="forgotPassword">Forgot password?</a></div>              <label class="remember-row"><input type="checkbox" id="rememberMe"> <span>Keep me signed in</span></label>
+              <button class="primary-btn login-submit" type="submit">Sign in <span>→</span></button>
+              <p class="login-feedback" id="loginFeedback" role="status" aria-live="polite"></p>
+            </form>
+            <div class="login-divider"><span></span> NEW TO ARDI? <span></span></div>
+            <button class="create-account-btn" id="createAccountBtn" type="button">Create an account <span>↗</span></button>
+          </div>
+          <div id="signupView" hidden>
+            <h2 class="signup-heading">Create your <em>account.</em></h2>
+            <p class="account-intro">Set up your ARDI workspace credentials.</p>
+            <form id="signupForm" class="login-form signup-form" novalidate>
+              <label for="signupName">Full name</label>
+              <input id="signupName" name="name" type="text" autocomplete="name" placeholder="Your name" required maxlength="100">
+              <label for="signupEmail">Email address</label>
+              <input id="signupEmail" name="email" type="email" autocomplete="email" placeholder="you@example.com" required>
+              <label for="nationalNumber">National Number</label>
+              <input
+                  id="nationalNumber"
+                  name="nationalNumber"
+                  type="text"
+                  inputmode="numeric"
+                  autocomplete="off"
+                  placeholder="Enter your national number"
+                  pattern="[0-9]{10}"
+                  minlength="10"
+                  maxlength="10"
+                  required
+              >
+              <label for="signupPassword">Create password</label>
+              <div class="password-wrap"><input id="signupPassword" name="password" type="password" autocomplete="new-password" placeholder="At least 15 characters" required maxlength="128" aria-describedby="passwordGuidance"><button type="button" id="toggleSignupPassword" aria-label="Show password">SHOW</button></div>
+              <div class="password-meter" aria-hidden="true"><span id="passwordMeterFill"></span></div>
+              <div class="password-guidance" id="passwordGuidance">
+                <span class="guidance-title">Password requirements</span>
+                <span class="password-rule" id="ruleLength"><i>○</i> 15–128 characters</span>
+                <span class="password-rule" id="ruleCommon"><i>○</i> Not a commonly used password</span>
+                <span class="guidance-note">No forced uppercase, number, or symbol combinations. Use a long, unique passphrase.</span>
+              </div>
+              <label for="signupConfirm">Confirm password</label>
+              <div class="password-wrap"><input id="signupConfirm" name="confirmPassword" type="password" autocomplete="new-password" placeholder="Enter your password again" required><button type="button" id="toggleConfirmPassword" aria-label="Show confirmation password">SHOW</button></div>
+              <p class="login-feedback" id="signupFeedback" role="status" aria-live="polite"></p>
+              <div class="signup-consents">
+
+              <!-- Terms and Conditions -->
+              <label class="consent-row">
+                  <input
+                      type="checkbox"
+                      id="agreeTerms"
+                      name="agreeTerms"
+                      required
+                  >
+                  <span>
+                      I agree to the
+                      <a href="pages/terms.html" target="_blank">Terms and Conditions</a>.
+                  </span>
+              </label>
+
+              <!-- Privacy Policy -->
+              <label class="consent-row">
+                  <input
+                      type="checkbox"
+                      id="agreePrivacy"
+                      name="agreePrivacy"
+                      required
+                  >
+                  <span>
+                      I have read and understood the
+                      <a href="pages/privacy.html" target="_blank">Privacy Policy</a>.
+                  </span>
+              </label>
+
+              <!-- Marketing / Updates -->
+              <label class="consent-row">
+                  <input
+                      type="checkbox"
+                      id="receiveUpdates"
+                      name="receiveUpdates"
+                  >
+                  <span>
+                      I agree to receive ARDI updates, news and announcements.
+                  </span>
+              </label>
+
+          </div>
+              <button class="primary-btn login-submit" type="submit">Create account <span>→</span></button>
+            </form>
+            <button class="back-workspace signup-back" id="backToLogin" type="button">← Back to sign in</button>
+          </div>
+          <p class="login-disclaimer">Frontend prototype · Password checks here are for guidance only. Server-side enforcement and authentication are not connected.</p>
+          <button class="back-workspace" id="backWorkspace" type="button">← Back to workspace</button>
+        </div>
+      </div>
+    </section>
+    <footer class="footer">ARDI <span>·</span> GROWING A NEW PERSPECTIVE <span class="footer-right">INTERACTIVE PROTOTYPE</span></footer>
+  </main>
+</div>
+<script src="app.js"></script>
+</body>
+</html>
